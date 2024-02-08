@@ -10,6 +10,9 @@ of academic staff and / or communicate a copy of this assignment to a plagiarism
 service(which may then retain a copy of this assignment on its database for the purpose
 of future plagiarism checking).
 """
+import pickle
+
+
 class Patient:
     ''''DOCSTRING'''
     __lastID = 0
@@ -25,7 +28,10 @@ class Patient:
         self.cPhone = contact_phone
         self.ID = Patient.id(0)
         Patient._all_patients[self.ID] = self
-        print(Patient.id())
+        self.procedure_list = []
+
+    def add_procedure(self, procedure):
+        pass
 
     @classmethod
     def id(cls, value=1):
@@ -33,9 +39,46 @@ class Patient:
             cls.__lastID = cls.__lastID + 1
         return cls.__lastID
 
-    def __str__(self):
-        pass
+    @classmethod
+    def get_patient(cls, id):
+        if id in cls._all_patients.keys():
+            return cls._all_patients[id]
+        else:
+            return None
+
+    @classmethod
+    def delete_patient(cls, id):
+        if id in cls._all_patients.keys():
+            del cls._all_patients[id]
+        return None
+
+    @classmethod
+    def save_patients(cls, filename):
+        filename = filename + '.pickle'
+        with open(filename, 'wb') as file:
+            pickle.dump([Patient._all_patients, Patient.id(), Procedure.id()], file)
+
+    @classmethod
+    def load_patients(cls, filename):
+        filename = filename + '.pickle'
+        with open(filename, 'rb') as file:
+            loaded = pickle.load(file)
+
+        Patient._all_patients = loaded[0]
+        Patient.__lastID = loaded[1]
+        Procedure.__lastID = loaded[2]
 
 
 class Procedure:
-    pass
+    __lastID = 0
+    _all_procedures = {}
+
+    def __init__(self):
+        self.ID = Procedure.id(0)
+        Procedure._all_procedures[self.ID] = self
+
+    @classmethod
+    def id(cls, value=1):
+        if value == 0:
+            cls.__lastID = cls.__lastID + 1
+        return cls.__lastID
