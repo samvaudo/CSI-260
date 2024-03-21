@@ -88,7 +88,7 @@ class computer(LibraryItem):
         return self.typeof
 
     def __str__(self):
-        return f'{"Name of".join(self.computername)}' + LibraryItem.__str__()
+        return f'{"Name:".join(self.computername)}' + LibraryItem.__str__()
 
 
 class Catalog:
@@ -99,6 +99,10 @@ class Catalog:
 
     def get_name(self):
         return self.name
+
+    @classmethod
+    def get_all(cls):
+        return cls._collection
 
     @classmethod
     def add_libraryItems(cls, items):
@@ -114,3 +118,4 @@ class Catalog:
             return [item for item in cls._collection if item.match(filter_text)]
         else:
             return [item for item in cls._collection if item.match(filter_text) and item.getType == typeof]
+
