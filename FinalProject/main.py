@@ -10,4 +10,4 @@
 # of future plagiarism checking).
 from URLScraper import URLScraper
 
-print(URLScraper.find_X('https://www.google.com', 2))
+print(URLScraper.find_linked_sites('https://www.google.com'))

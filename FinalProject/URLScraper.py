@@ -13,7 +13,7 @@ from urllib.parse import urlsplit
 import requests
 
 
-class URLScraper:
+class URLScraper(BeautifulSoup):
 
     @classmethod
     def get_base_url(cls, url: str):
@@ -46,16 +46,8 @@ class URLScraper:
         link_list = []
         html = cls.get_url_plaintext(url)
         soup = BeautifulSoup(html, 'html.parser')
-        for text in soup.find_all('a'):
-            link = text.get('href')
-            if link is not None:  # sometimes the URL scrapers return none, as they cant find a href
-                if (cls.get_base_url(url) not in link) and ('http' in link):  # is this link an absolute link?
-                    link_list.append(link)
-                else:
-                    # link_list.append(url + text)
-                    continue
-            else:
-                continue
+        link_list = {text.get('href') for text in soup.find_all('a') if text.get('href') is not None and 'http' in text.get('href')}
+
 
         return link_list
 
