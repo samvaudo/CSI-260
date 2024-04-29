@@ -10,4 +10,4 @@
 # of future plagiarism checking).
 from URLScraper import URLScraper
 
-print(URLScraper.find_X('https://python.org', 2))
+print(URLScraper.find_X('https://www.google.com', 2))

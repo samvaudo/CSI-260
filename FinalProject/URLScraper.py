@@ -48,7 +48,7 @@ class URLScraper:
         soup = BeautifulSoup(html, 'html.parser')
         for text in soup.find_all('a'):
             link = text.get('href')
-            if link is not None:  # sometimes the URL scrapers return none, as they cant find an href
+            if link is not None:  # sometimes the URL scrapers return none, as they cant find a href
                 if (cls.get_base_url(url) not in link) and ('http' in link):  # is this link an absolute link?
                     link_list.append(link)
                 else:

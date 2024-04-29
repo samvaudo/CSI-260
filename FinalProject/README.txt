@@ -13,3 +13,6 @@ most recent version
 
 For simplier test runs:
 Run find_linked_sites, which only does an X=1 search
+
+Presentation:
+https://docs.google.com/presentation/d/1-wTn6mGHTbf1GZD3bApjkGBHGsuRdSQYuWxBwQegWGA/edit?usp=sharing
