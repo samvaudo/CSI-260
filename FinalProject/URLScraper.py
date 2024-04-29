@@ -45,10 +45,8 @@ class URLScraper(BeautifulSoup):
         '''
         link_list = []
         html = cls.get_url_plaintext(url)
-        soup = BeautifulSoup(html, 'html.parser')
+        soup = cls(html, 'html.parser')
         link_list = {text.get('href') for text in soup.find_all('a') if text.get('href') is not None and 'http' in text.get('href')}
-
-
         return link_list
 
     @classmethod
@@ -60,7 +58,7 @@ class URLScraper(BeautifulSoup):
         '''
         image_list = []
         html2 = cls.get_url_plaintext(url)
-        soup = BeautifulSoup(html2, 'html.parser')
+        soup = cls(html2, 'html.parser')
         for img in soup.find_all('img'):
             link = img.get('src')
             if link is not None:  # sometimes the URL scrapers return none, as they cant find a src
@@ -101,7 +99,7 @@ class URLScraper(BeautifulSoup):
         return site_list
 
     @classmethod
-    def find_next(cls, dictionary: dict, original_url: str, X: int):
+    def find_next_one(cls, dictionary: dict, original_url: str, X: int):
         '''
         Finds all URLs to a depth X, given its inital dictionary find, as well as its URL
         :param dictionary: the inital dictionary it starts with.
@@ -143,6 +141,6 @@ class URLScraper(BeautifulSoup):
             return None
         else:
             inital_dict = cls.find_linked_sites(url)
-            final_dict = cls.find_next(inital_dict, url, X)
+            final_dict = cls.find_next_one(inital_dict, url, X)
             return final_dict
 
